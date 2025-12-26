@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mini_chat/app/core/routes/app_router.dart';
+import 'package:mini_chat/app/data/models/user.dart';
 import 'package:mini_chat/app/locator.dart';
-import 'package:mini_chat/app/viewModels/bottom_nav/bottom_nav_bloc.dart';
+import 'package:mini_chat/app/viewModels/index.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  Hive.registerAdapter(UserModelAdapter());
+  await Hive.openBox<UserModel>('usersBox');
   setupLocator();
   runApp(const MyApp());
 }
@@ -16,7 +21,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocListener(
-      listeners: [BlocProvider(create: (_) => sl<BottomNavBloc>())],
+      listeners: [
+        BlocProvider(create: (_) => sl<BottomNavBloc>()),
+        BlocProvider(create: (_) => sl<HomeBloc>()),
+      ],
 
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

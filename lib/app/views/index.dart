@@ -6,3 +6,4 @@ export 'home/home.dart';
 
 // widgets
 export 'widgets/common_button.dart';
+export 'widgets/user_widget.dart';
