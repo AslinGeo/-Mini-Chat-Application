@@ -7,10 +7,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final UsersRepository repository;
   final List<UserModel> _users = [];
   HomeBloc(this.repository) : super(HomeInitial()) {
-    on<HomeEvent>((event, emit) {
-      on<GetUsers>(_loadUsers);
-      on<AddUser>(_addUser);
-    });
+    on<GetUsers>(_loadUsers);
+    on<AddUser>(_addUser);
   }
 
   Future<void> _loadUsers(GetUsers event, Emitter<HomeState> emit) async {

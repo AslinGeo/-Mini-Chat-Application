@@ -20,10 +20,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocListener(
-      listeners: [
+    return MultiBlocProvider(
+      providers: [
         BlocProvider(create: (_) => sl<BottomNavBloc>()),
-        BlocProvider(create: (_) => sl<HomeBloc>()),
+        // BlocProvider(create: (_) => sl<HomeBloc>()),
+        BlocProvider(create: (_) => sl<HomeBloc>()..add(GetUsers())),
       ],
 
       child: MaterialApp.router(

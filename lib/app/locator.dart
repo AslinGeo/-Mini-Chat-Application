@@ -7,9 +7,7 @@ final sl = GetIt.instance; // Service Locator
 void setupLocator() {
   // repo
 
-  sl.registerLazySingleton<UsersRepository>(
-    () => UsersRepository(),
-  );
+  sl.registerLazySingleton<UsersRepository>(() => UsersRepository());
 
   // bloc
   sl.registerFactory<BottomNavBloc>(() => BottomNavBloc());

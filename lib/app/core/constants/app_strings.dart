@@ -8,5 +8,5 @@ class AppStrings {
   static const String add = "Add";
   static const String snackMessage = "User ##user## added";
   static const String userEmptyMessage = "No users found";
-  static const String active = "Active";
+  static const String active = "Online";
 }

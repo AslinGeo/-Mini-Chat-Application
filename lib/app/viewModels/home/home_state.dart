@@ -5,7 +5,6 @@ import 'package:mini_chat/app/data/index.dart';
 abstract class HomeState  {
   const HomeState();
 
-  @override
   List<Object> get props => [];
 }
 

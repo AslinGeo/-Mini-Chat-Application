@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mini_chat/app/core/index.dart';
-import 'package:mini_chat/app/locator.dart';
 import 'package:mini_chat/app/viewModels/index.dart';
 import 'package:mini_chat/app/views/index.dart';
 
@@ -17,11 +16,6 @@ class _HomeScreenState extends State<HomeScreen> {
   final _formKey = GlobalKey<FormState>();
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
@@ -30,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(height: 20),
             toggleSection(),
             SizedBox(height: 20),
-            users(),
+            Expanded(child: users()),
           ],
         ),
         floatingActionButton: FloatingActionButton(
@@ -97,29 +91,24 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget users() {
-    return BlocProvider(
-      create: (_) => sl<HomeBloc>()..add(GetUsers()),
-      child: BlocBuilder<HomeBloc, HomeState>(
-        builder: (context, state) {
-          if (state is HomeLoading) {
-            return CircularProgressIndicator();
-          } else if (state is HomeError) {
-            return Text(state.message);
-          } else if (state is HomeLoaded) {
-            return state.users.isEmpty
-                ? Center(child: Text(AppStrings.userEmptyMessage))
-                : Expanded(
-                    child: ListView.builder(
-                      itemCount: state.users.length,
-                      itemBuilder: (context, index) {
-                        return UserWidget(user: state.users[index]);
-                      },
-                    ),
-                  );
-          }
-          return Container();
-        },
-      ),
+    return BlocBuilder<HomeBloc, HomeState>(
+      builder: (context, state) {
+        if (state is HomeLoading) {
+          return CircularProgressIndicator();
+        } else if (state is HomeError) {
+          return Text(state.message);
+        } else if (state is HomeLoaded) {
+          return state.users.isEmpty
+              ? Center(child: Text(AppStrings.userEmptyMessage))
+              : ListView.builder(
+                  itemCount: state.users.length,
+                  itemBuilder: (context, index) {
+                    return UserWidget(user: state.users[index]);
+                  },
+                );
+        }
+        return Container();
+      },
     );
   }
 
