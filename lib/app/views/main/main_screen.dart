@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../viewModels/index.dart';
+import '../index.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final pages = [
-      const HomeScreen(),
-      const PlaceholderScreen(title: 'Tab 2'),
-      const PlaceholderScreen(title: 'Tab 3'),
-    ];
+    final pages = [const HomeScreen(), Container(), Container()];
 
     return BlocBuilder<BottomNavBloc, BottomNavState>(
       builder: (context, state) {

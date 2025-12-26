@@ -1,4 +1,4 @@
-# flutter_application_4
+# mini_chat
 
 A new Flutter project.
 
