@@ -1,35 +1,35 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user.dart';
+part of 'user_chat.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class UserModelAdapter extends TypeAdapter<UserModel> {
+class UserChatAdapter extends TypeAdapter<UserChat> {
   @override
-  final int typeId = 1;
+  final int typeId = 2;
 
   @override
-  UserModel read(BinaryReader reader) {
+  UserChat read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return UserModel(
-      id: fields[0] as String,
-      name: fields[1] as String,
+    return UserChat(
+      userId: fields[0] as String,
+      messages: (fields[1] as List).cast<ChatMessage>(),
     );
   }
 
   @override
-  void write(BinaryWriter writer, UserModel obj) {
+  void write(BinaryWriter writer, UserChat obj) {
     writer
       ..writeByte(2)
       ..writeByte(0)
-      ..write(obj.id)
+      ..write(obj.userId)
       ..writeByte(1)
-      ..write(obj.name);
+      ..write(obj.messages);
   }
 
   @override
@@ -38,7 +38,7 @@ class UserModelAdapter extends TypeAdapter<UserModel> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is UserModelAdapter &&
+      other is UserChatAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

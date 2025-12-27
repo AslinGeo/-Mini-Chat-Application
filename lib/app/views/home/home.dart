@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mini_chat/app/core/index.dart';
+import 'package:mini_chat/app/data/index.dart';
 import 'package:mini_chat/app/viewModels/index.dart';
 import 'package:mini_chat/app/views/index.dart';
 
@@ -24,7 +25,9 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(height: 20),
             toggleSection(),
             SizedBox(height: 20),
-            Expanded(child: users()),
+            Expanded(
+              child: whichView == AppStrings.usersList ? users() : histories(),
+            ),
           ],
         ),
         floatingActionButton: FloatingActionButton(
@@ -64,6 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   setState(() {
                     whichView = AppStrings.usersList;
                   });
+                  context.read<HomeBloc>().add(GetUsers());
                 },
               ),
             ),
@@ -81,6 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   setState(() {
                     whichView = AppStrings.chatHistory;
                   });
+                  context.read<HomeBloc>().add(GetUsers());
                 },
               ),
             ),
@@ -103,7 +108,45 @@ class _HomeScreenState extends State<HomeScreen> {
               : ListView.builder(
                   itemCount: state.users.length,
                   itemBuilder: (context, index) {
-                    return UserWidget(user: state.users[index]);
+                    return UserWidget(
+                      user: state.users[index],
+                      backgroundColor: AppColors.lightBlue,
+                      isOnline: true,
+                    );
+                  },
+                );
+        }
+        return Container();
+      },
+    );
+  }
+
+  Widget histories() {
+    return BlocBuilder<HomeBloc, HomeState>(
+      builder: (context, state) {
+        if (state is HomeLoading) {
+          return CircularProgressIndicator();
+        } else if (state is HomeError) {
+          return Text(state.message);
+        } else if (state is HomeLoaded) {
+          return state.users.isEmpty
+              ? Center(child: Text(AppStrings.userEmptyMessage))
+              : ListView.builder(
+                  itemCount: state.users.length,
+                  itemBuilder: (context, index) {
+                    final chatHistory = ChatRepository().getMessages(
+                      state.users[index].id,
+                    );
+                    if (chatHistory.isNotEmpty) {
+                      return UserWidget(
+                        user: state.users[index],
+                        backgroundColor: AppColors.green,
+                        isOnline: false,
+                        lastMessage: chatHistory.last.message,
+                        createdAt: chatHistory.last.id,
+                      );
+                    }
+                    return SizedBox.shrink();
                   },
                 );
         }

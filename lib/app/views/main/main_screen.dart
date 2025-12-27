@@ -8,7 +8,11 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final pages = [const HomeScreen(), Container(), Container()];
+    final pages = [
+      const HomeScreen(),
+      Center(child: Text("Setting")),
+      Center(child: Text("Profile")),
+    ];
 
     return BlocBuilder<BottomNavBloc, BottomNavState>(
       builder: (context, state) {
@@ -20,8 +24,14 @@ class MainScreen extends StatelessWidget {
               context.read<BottomNavBloc>().add(ChangeTabEvent(index));
             },
             items: const [
-              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-              BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chats'),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.messenger),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.settings),
+                label: 'Setting',
+              ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.person),
                 label: 'Profile',

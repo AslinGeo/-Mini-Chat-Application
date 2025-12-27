@@ -8,8 +8,11 @@ void setupLocator() {
   // repo
 
   sl.registerLazySingleton<UsersRepository>(() => UsersRepository());
+  sl.registerLazySingleton<ChatRepository>(() => ChatRepository());
 
   // bloc
   sl.registerFactory<BottomNavBloc>(() => BottomNavBloc());
+  sl.registerFactory<ChatBloc>(() => ChatBloc(sl<ChatRepository>()));
+
   sl.registerFactory<HomeBloc>(() => HomeBloc(sl<UsersRepository>()));
 }
