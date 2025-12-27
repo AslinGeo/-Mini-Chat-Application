@@ -25,23 +25,24 @@ class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: appBar(),
-        body: Column(
-          children: [
-            Expanded(child: chatList(widget.userModel.name)),
-            messageInputBar(),
-          ],
-        ),
+    return Scaffold(
+      backgroundColor: AppColors.white,
+
+      appBar: appBar(),
+      body: Column(
+        children: [
+          Expanded(child: chatList(widget.userModel.name)),
+          messageInputBar(),
+        ],
       ),
     );
   }
 
   PreferredSize appBar() {
     return PreferredSize(
-      preferredSize: Size.fromHeight(70),
+      preferredSize: Size.fromHeight(100),
       child: Container(
+        padding: EdgeInsets.only(top: 30),
         decoration: BoxDecoration(
           border: Border(
             bottom: BorderSide(width: 1, color: AppColors.lightGray),

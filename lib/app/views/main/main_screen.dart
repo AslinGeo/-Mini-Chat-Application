@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mini_chat/app/core/index.dart';
 import '../../viewModels/index.dart';
 import '../index.dart';
 
@@ -17,6 +18,8 @@ class MainScreen extends StatelessWidget {
     return BlocBuilder<BottomNavBloc, BottomNavState>(
       builder: (context, state) {
         return Scaffold(
+          backgroundColor: AppColors.white,
+
           body: IndexedStack(index: state.selectedIndex, children: pages),
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: state.selectedIndex,

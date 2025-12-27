@@ -5,6 +5,9 @@ import 'package:mini_chat/app/data/index.dart';
 import 'package:http/http.dart' as http;
 
 class ChatRepository {
+  final http.Client client;
+
+  ChatRepository({http.Client? client}) : client = client ?? http.Client();
   final Box<UserChat> box = Hive.box<UserChat>('chatBox');
 
   List<ChatMessage> getMessages(String userId) {
@@ -30,11 +33,13 @@ class ChatRepository {
   }
 
   Future<String> fetchRandomMessage() async {
-    final response = await http.get(Uri.parse('http://api.quotable.io/random'));
+    final response = await client.get(
+      Uri.parse('https://dummyjson.com/quotes/random'),
+    );
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      return data['content'];
+      return data['quote'];
     } else {
       throw Exception('Failed to fetch quote');
     }
